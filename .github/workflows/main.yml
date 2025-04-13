@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      #region Preparation
+      # region Preparation
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -35,9 +35,9 @@ jobs:
 
       - name: Install packages
         run: npm ci
-      #endregion
+      # endregion
 
-      #region Actual Work Steps
+      # region Actual Work Steps
       - name: Substitute Manifest and Download Links For Versioned Ones
         id: sub_manifest_link_version
         uses: microsoft/variable-substitution@v1
@@ -56,7 +56,6 @@ jobs:
           files: module.json
         env:
           manifest: https://raw.githubusercontent.com/${{ github.repository }}/next/module.json
-
 
       - name: Build distribution
         run: npm run build
@@ -85,4 +84,4 @@ jobs:
         if: ${{ env.DISCORD_WEBHOOK != '' && !github.event.release.prerelease }}
         with:
           args: "${{ (steps.get-version.outputs.version-without-v == '1.0.0' && '<@&1127986401590382712>') || '' }} ${{steps.title.outputs.title}} has been updated to version `${{github.event.release.tag_name}}`!"
-      #endregion
+      # endregion

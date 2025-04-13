@@ -71,7 +71,7 @@ export function transformEntry(doc) {
 			JSON.stringify(doc[key])
 				.replaceAll(" . ", ". ")
 				.replaceAll(" .<", ".<")
-				.replaceAll(" .\"", ".\"")
+				.replaceAll(" .\"", ".\""),
 			// .replaceAll(/(\S)- /g, "$1"),
 		);
 
