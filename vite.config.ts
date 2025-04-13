@@ -15,7 +15,7 @@ import { transformEntry } from "./scripts/transformer.mjs";
 const modulePath = `modules/${moduleJSON.id}`;
 // const cssId = moduleJSON.flags.css.id;
 
-const entry = "/index.ts";
+const entry = "index.ts";
 const postcss = {
 	inject: false,
 	sourceMap: true,
@@ -75,7 +75,7 @@ export default defineConfig(({ mode: _mode }) => {
 				// Rewrite incoming `module-id.js` request from Foundry to the dev server `index.ts`.
 				[`/${modulePath}/dist/${moduleJSON.id}.js`]: {
 					target: `http://localhost:30001/${modulePath}/dist`,
-					rewrite: () => entry,
+					rewrite: () => `/${entry}`,
 				},
 
 				// Enable socket.io from main Foundry server.
