@@ -1,2 +1,2 @@
 import "./styles/main.css";
-import "./view";
+import "./module";

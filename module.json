@@ -78,7 +78,8 @@
 	],
 	"flags": {
 		"css": {
-			"id": ""
+			"shorthand": "mtemp",
+			"id": "module-template"
 		},
 		"hotReload": {
 			"extensions": [

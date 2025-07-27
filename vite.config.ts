@@ -1,10 +1,13 @@
 import type { Plugin, UserConfig } from "vite";
 import { existsSync, mkdir, writeFileSync } from "node:fs";
 import path from "node:path";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 import autoprefixer from "autoprefixer";
 import vttSync from "foundryvtt-sync";
 import postcssPresetEnv from "postcss-preset-env";
+import { sveltePreprocess } from "svelte-preprocess";
 import { defineConfig } from "vite";
+import lucidePreprocess from "vite-plugin-lucide-preprocess";
 import moduleJSON from "./module.json" with { type: "json" };
 import { transformEntry } from "./scripts/transformer.mjs";
 
@@ -41,7 +44,7 @@ const postcss = {
 	],
 };
 
-export default defineConfig(({ mode: _mode }) => {
+export default defineConfig(({ mode }) => {
 	return {
 		root: "src/", // Source location / esbuild root.
 		base: `/${modulePath}/dist`, // Base module path that 30001 / served dev directory.
@@ -121,6 +124,14 @@ export default defineConfig(({ mode: _mode }) => {
 		},
 
 		plugins: [
+			lucidePreprocess(),
+			svelte({
+				compilerOptions: {
+					// customElement: true,
+					cssHash: mode === "production" ? ({ hash, css }) => `svelte-${moduleJSON.flags.css.shorthand}-${hash(css)}` : undefined,
+				},
+				preprocess: sveltePreprocess(),
+			}),
 			// tailwindcss(),
 			vttSync(moduleJSON, { transformer: transformEntry }) as Plugin[],
 			{
